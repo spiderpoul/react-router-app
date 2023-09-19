@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-100 
+}
+
+.card-container {
+  @apply max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-6
+}
+
+.search-input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 outline-none 
+}
+
+.course-title {
+  @apply block mt-1 mb-8 text-lg leading-tight font-medium text-black hover:underline
+}
+
+.content-type {
+  @apply uppercase tracking-wide text-sm text-indigo-500 font-semibold
+}
