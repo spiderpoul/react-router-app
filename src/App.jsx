@@ -6,6 +6,8 @@ import { CoursesPage } from "./pages/CoursesPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
 import { ROUTES } from "./constants";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { UserPage } from "./pages/UserPage";
 
 function App() {
   return (
@@ -15,6 +17,16 @@ function App() {
         <Route path={ROUTES.about} element={<AboutPage />} />
         <Route path={ROUTES.courseDetails} element={<CourseDetails />} />
         <Route path={ROUTES.courses} element={<CoursesPage />} />
+
+        <Route
+          path={ROUTES.user}
+          element={
+            <ProtectedRoute isAllowed={false}>
+              <UserPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BaseLayout>

@@ -16,9 +16,11 @@ export const CourseCard = ({ imageUrl, title, id, description }) => {
           <div className="content-type">
             Course
           </div>
-          <Link to={`${ROUTES.courses}/${id}`} className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+
+          <Link to={`${ROUTES.courses}/${id}`} className="course-link">
             {title}
           </Link>
+
           <p className="mt-2 text-slate-500">
             {description}
           </p>

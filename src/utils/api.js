@@ -10,21 +10,34 @@ const mockRequest = (data) => {
 };
 
 const mockData = [
-  ["/courses", () => coursesMocks],
+  [
+    "/courses",
+    ({ search }) =>
+      search
+        ? coursesMocks.filter((item) =>
+            item.title.toLowerCase().includes(search.toLowerCase())
+          )
+        : coursesMocks,
+  ],
   ["/courses/:id", ({ id }) => coursesMocks[id]],
 ];
 
-export const mockFetch = (requestUrl) => {
+export const mockFetch = async (requestUrl, options) => {
+  console.log('Fetching', requestUrl, options)
   const [matchedUrl, getMocks] =
     mockData.find(([url]) => Boolean(matchPath(url, requestUrl))) || [];
 
   if (!getMocks) {
-    return { error: 404, message: "Requested data not found" };
+    return { error: { status: 404, message: "Requested data not found" } };
   }
 
   const { params } = matchPath(matchedUrl, requestUrl);
 
-  return mockRequest(getMocks(params));
+  const response = await mockRequest(getMocks({ ...params, ...options }))
+
+  console.log('Response for:', requestUrl, options, response)
+
+  return response;
 };
 
 window.mockFetch = mockFetch;

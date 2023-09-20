@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ROUTES } from "../constants";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
@@ -21,10 +21,11 @@ const TABS = [
 
 export const CourseDetails = () => {
   const [data, setData] = useState();
+  const {id} = useParams()
 
   useEffect(() => {
-    mockFetch("/courses/1").then(setData);
-  }, []);
+    mockFetch(`/courses/${id}`).then(setData);
+  }, [id]);
 
   if (!data) return <Loader />;
 

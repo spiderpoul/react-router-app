@@ -1,10 +1,13 @@
+import aboutImage from "../assests/images/about.avif";
+
 export const AboutPage = () => {
   return (
     <div className="pt-10">
       <h1 className="text-xl font-medium text-black mb-5">About Course App</h1>
       <img
         className="float-left w-1/3 mr-5 mb-1 rounded-md shadow-md"
-        src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
+        src={aboutImage}
+        alt="about"
       />
       <p className="text-slate-500 mb-5">
         Sed ut perspiciatis unde omnis iste natus error sit voluptatem
