@@ -1,5 +1,4 @@
-import { Link, useParams } from "react-router-dom";
-import { ROUTES } from "../constants";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
 import { mockFetch } from "../utils/api";
@@ -10,7 +9,7 @@ import { CourseAuthor } from "../components/CourseAuthor";
 
 const TABS = [
   {
-    path: "program",
+    path: "",
     title: "Course program",
   },
   {
@@ -21,7 +20,7 @@ const TABS = [
 
 export const CourseDetails = () => {
   const [data, setData] = useState();
-  const {id} = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     mockFetch(`/courses/${id}`).then(setData);
@@ -42,16 +41,14 @@ export const CourseDetails = () => {
           />
         </div>
         <div className="p-8">
-          <div className="content-type">
-            Course
-          </div>
-          <div className="course-title">
-            {title}
-          </div>
+          <div className="content-type">Course</div>
+          <div className="course-title">{title}</div>
           <p className="mt-2 text-slate-500 mb-6">{description}</p>
           <Tabs tabs={TABS} />
-          <CourseDescription />
-          <CourseAuthor />
+          <Routes>
+            <Route index element={<CourseDescription />} />
+            <Route path="author" element={<CourseAuthor />} />
+          </Routes>
           <LinkButton to="start-course" title="Start course" />
         </div>
       </div>

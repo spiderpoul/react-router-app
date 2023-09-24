@@ -11,12 +11,12 @@ import { UserPage } from "./pages/UserPage";
 
 function App() {
   return (
-    <BaseLayout>
-      <Routes>
-        <Route path={ROUTES.homePage} element={<HomePage />} />
-        <Route path={ROUTES.about} element={<AboutPage />} />
-        <Route path={ROUTES.courseDetails} element={<CourseDetails />} />
-        <Route path={ROUTES.courses} element={<CoursesPage />} />
+    <Routes>
+      <Route path="/" element={<BaseLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="courses/:id/*" element={<CourseDetails />} />
+        <Route path="courses" element={<CoursesPage />} />
 
         <Route
           path={ROUTES.user}
@@ -28,8 +28,8 @@ function App() {
         />
 
         <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </BaseLayout>
+      </Route>
+    </Routes>
   );
 }
 
