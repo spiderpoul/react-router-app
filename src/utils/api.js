@@ -23,7 +23,7 @@ const mockData = [
 ];
 
 export const mockFetch = async (requestUrl, options) => {
-  console.log('Fetching', requestUrl, options)
+  console.log("Fetching", requestUrl, options);
   const [matchedUrl, getMocks] =
     mockData.find(([url]) => Boolean(matchPath(url, requestUrl))) || [];
 
@@ -33,9 +33,9 @@ export const mockFetch = async (requestUrl, options) => {
 
   const { params } = matchPath(matchedUrl, requestUrl);
 
-  const response = await mockRequest(getMocks({ ...params, ...options }))
+  const response = await mockRequest(getMocks({ ...params, ...options }));
 
-  console.log('Response for:', requestUrl, options, response)
+  console.log("Response for:", requestUrl, options, response);
 
   return response;
 };

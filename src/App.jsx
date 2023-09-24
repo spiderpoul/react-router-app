@@ -1,36 +1,56 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import { BaseLayout } from "./components/BaseLayout";
 import { AboutPage } from "./pages/AboutPage";
-import { CourseDetails } from "./pages/CourseDeatilsPage";
-import { CoursesPage } from "./pages/CoursesPage";
+import { CourseDetails, courseLoader } from "./pages/CourseDeatilsPage";
+import { CoursesPage, coursesLoader } from "./pages/CoursesPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
 import { ROUTES } from "./constants";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserPage } from "./pages/UserPage";
+import { Loader } from "./components/Loader";
+import { CourseDescription } from "./components/CourseDescription";
+import { CourseAuthor } from "./components/CourseAuthor";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<BaseLayout />} errorElement={<ErrorPage />}>
+      <Route index element={<HomePage />} />
+      <Route path="about" element={<AboutPage />} />
+
+      <Route
+        path="courses/:id"
+        element={<CourseDetails />}
+        loader={courseLoader}
+      >
+        <Route index element={<CourseDescription />} />
+        <Route path="author" element={<CourseAuthor />} />
+      </Route>
+
+      <Route path="courses" element={<CoursesPage />} loader={coursesLoader} />
+
+      <Route
+        path={ROUTES.user}
+        element={
+          <ProtectedRoute isAllowed={false}>
+            <UserPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<ErrorPage />} />
+    </Route>
+  )
+);
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<BaseLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="courses/:id/*" element={<CourseDetails />} />
-        <Route path="courses" element={<CoursesPage />} />
-
-        <Route
-          path={ROUTES.user}
-          element={
-            <ProtectedRoute isAllowed={false}>
-              <UserPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route path="*" element={<ErrorPage />} />
-      </Route>
-    </Routes>
-  );
+  return <RouterProvider router={router} fallbackElement={<Loader />} />;
 }
 
 export default App;
