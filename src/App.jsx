@@ -17,6 +17,7 @@ import { UserPage } from "./pages/UserPage";
 import { Loader } from "./components/Loader";
 import { CourseDescription } from "./components/CourseDescription";
 import { CourseAuthor } from "./components/CourseAuthor";
+import { StartCoursePage, startCourseAction } from "./pages/StartCoursePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +33,12 @@ const router = createBrowserRouter(
         <Route index element={<CourseDescription />} />
         <Route path="author" element={<CourseAuthor />} />
       </Route>
+
+      <Route
+        path="courses/:id/start-course"
+        element={<StartCoursePage />}
+        action={startCourseAction}
+      />
 
       <Route path="courses" element={<CoursesPage />} loader={coursesLoader} />
 

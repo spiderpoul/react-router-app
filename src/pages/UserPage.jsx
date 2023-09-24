@@ -3,7 +3,7 @@ export const UserPage = () => {
     <div className="flex justify-center w-full">
       <div className="pt-10 w-2/3">
         <img
-          class="w-24 h-24 rounded-full float-left mb-2 mr-4"
+          className="w-24 h-24 rounded-full float-left mb-2 mr-4"
           src="https://i.pravatar.cc/300"
           alt="Rounded avatar"
         />

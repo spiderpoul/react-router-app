@@ -13,7 +13,7 @@ const errorIcon = (
     viewBox="0 0 24 24"
     strokeWidth="1.5"
     stroke="currentColor"
-    class="w-64 h-64 text-slate-400"
+    className="w-64 h-64 text-slate-400"
   >
     <path
       strokeLinecap="round"
