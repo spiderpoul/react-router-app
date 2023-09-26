@@ -8,7 +8,6 @@ import {
 import { BaseLayout } from "./components/BaseLayout";
 import { AboutPage } from "./pages/AboutPage";
 import { CourseDetails, courseLoader } from "./pages/CourseDeatilsPage";
-import { CoursesPage, coursesLoader } from "./pages/CoursesPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
 import { ROUTES } from "./constants";
@@ -40,7 +39,16 @@ const router = createBrowserRouter(
         action={startCourseAction}
       />
 
-      <Route path="courses" element={<CoursesPage />} loader={coursesLoader} />
+      <Route
+        path="courses"
+        fallbackElement={<Loader />}
+        lazy={() =>
+          import("./pages/CoursesPage").then((module) => ({
+            Component: module.CoursesPage,
+            loader: module.coursesLoader,
+          }))
+        }
+      />
 
       <Route
         path={ROUTES.user}
