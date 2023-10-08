@@ -1,12 +1,11 @@
-import { Outlet } from "react-router-dom";
-import { MainNavigation } from "./MainNavigation";
+import { Header } from "./Header";
 
-export const BaseLayout = () => {
+export const BaseLayout = ({ children }) => {
   return (
     <div className="flex flex-col items-center">
-      <MainNavigation />
+      <Header>Header</Header>
       <div className="flex flex-col px-6 relative h-full w-2/3">
-        <Outlet />
+        Main Content
       </div>
     </div>
   );
