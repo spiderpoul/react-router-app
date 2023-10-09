@@ -20,11 +20,6 @@ const TABS = [
 
 export const CourseDetails = () => {
   const [data, setData] = useState();
-  const { id } = useParams();
-
-  useEffect(() => {
-    mockFetch(`/courses/${id}`).then(setData);
-  }, [id]);
 
   if (!data) return <Loader />;
 
@@ -44,11 +39,10 @@ export const CourseDetails = () => {
           <div className="content-type">Course</div>
           <div className="course-title">{title}</div>
           <p className="mt-2 text-slate-500 mb-6">{description}</p>
-          <Tabs tabs={TABS} />
-          <Routes>
-            <Route index element={<CourseDescription />} />
-            <Route path="author" element={<CourseAuthor />} />
-          </Routes>
+
+          <CourseDescription />
+          <CourseAuthor />
+
           <LinkButton to="start-course" title="Start course" />
         </div>
       </div>
