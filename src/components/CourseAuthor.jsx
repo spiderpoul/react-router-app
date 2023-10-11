@@ -2,13 +2,11 @@ export const CourseAuthor = () => {
   return (
     <>
       <img
-        class="w-24 h-24 rounded-full float-left mb-2 mr-4"
+        className="w-24 h-24 rounded-full float-left mb-2 mr-4"
         src="https://i.pravatar.cc/300"
         alt="Rounded avatar"
       />
-      <div className="content-type mb-3">
-        Author
-      </div>
+      <div className="content-type mb-3">Author</div>
       <p className="text-slate-500 mb-10">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
