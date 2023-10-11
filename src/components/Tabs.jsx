@@ -1,11 +1,17 @@
-import { Link, useLocation, useMatch } from "react-router-dom";
+import { Link, NavLink, useLocation, useMatch } from "react-router-dom";
 import { ROUTES } from "../constants";
 
 const TabLink = ({ path, title }) => {
   return (
-    <Link to={path} className={`tab-link`}>
+    <NavLink
+      to={path}
+      end
+      className={({ isActive }) =>
+        `tab-link ${isActive ? "tab-link-active" : ""}`
+      }
+    >
       {title}
-    </Link>
+    </NavLink>
   );
 };
 
