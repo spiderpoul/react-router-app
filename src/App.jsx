@@ -12,11 +12,12 @@ import { UserPage } from "./pages/UserPage";
 function App() {
   const isAuthorized = false;
   return (
-    <BaseLayout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+    <Routes>
+      <Route path="/" element={<BaseLayout />}>
+        <Route index element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/courses/:id/*" element={<CourseDetails />} />
         <Route
           path="/user"
           element={
@@ -26,8 +27,8 @@ function App() {
           }
         />
         <Route path="*" element={<ErrorPage errorCode={404} />} />
-      </Routes>
-    </BaseLayout>
+      </Route>
+    </Routes>
   );
 }
 
