@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { BaseLayout } from "./components/BaseLayout";
 import { AboutPage } from "./pages/AboutPage";
-import { CourseDetails, courseLoader } from "./pages/CourseDeatilsPage";
 import { CoursesPage } from "./pages/CoursesPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
@@ -24,9 +23,13 @@ const router = createBrowserRouter(
       <Route path="/courses" element={<CoursesPage />} />
       <Route
         path="/courses/:id/*"
-        loader={courseLoader}
-        element={<CourseDetails />}
         errorElement={<ErrorPage />}
+        lazy={() =>
+          import("./pages/CourseDeatilsPage").then((module) => ({
+            Component: module.CourseDetails,
+            loader: module.courseLoader,
+          }))
+        }
       />
       <Route
         path="/user"
