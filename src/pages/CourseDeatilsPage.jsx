@@ -1,11 +1,20 @@
-import { Route, Routes, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {
+  Await,
+  Route,
+  Routes,
+  defer,
+  useAsyncValue,
+  useLoaderData,
+  useParams,
+} from "react-router-dom";
+import { Suspense, useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
 import { mockFetch } from "../utils/api";
 import { LinkButton } from "../components/LinkButton";
 import { Tabs } from "../components/Tabs";
 import { CourseDescription } from "../components/CourseDescription";
 import { CourseAuthor } from "../components/CourseAuthor";
+import { ErrorPage } from "./ErrorPage";
 
 const TABS = [
   {
@@ -18,18 +27,14 @@ const TABS = [
   },
 ];
 
-export const CourseDetails = () => {
-  const [data, setData] = useState();
+export const courseLoader = async ({ params }) => {
+  const course = mockFetch(`/courses/${params.id}`);
 
-  const { id } = useParams();
+  return defer({ course });
+};
 
-  useEffect(() => {
-    mockFetch(`/courses/${id}`).then((res) => setData(res));
-  }, [id]);
-
-  if (!data) return <Loader />;
-
-  const { imageUrl, title, description } = data || {};
+const CourseDetailsInner = () => {
+  const { imageUrl, title, description } = useAsyncValue();
 
   return (
     <div className="card-container mt-10">
@@ -57,5 +62,17 @@ export const CourseDetails = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const CourseDetails = () => {
+  const { course } = useLoaderData();
+
+  return (
+    <Suspense fallback={<Loader />}>
+      <Await resolve={course} errorElement={<ErrorPage />}>
+        <CourseDetailsInner />
+      </Await>
+    </Suspense>
   );
 };

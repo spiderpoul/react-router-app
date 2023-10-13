@@ -1,3 +1,5 @@
+import { useAsyncError, useRouteError } from "react-router-dom";
+
 const ERROR_CODES = {
   404: "Not found",
   401: "Not allowed",
@@ -21,13 +23,19 @@ const errorIcon = (
   </svg>
 );
 
-export const ErrorPage = ({ errorCode = 404, message }) => {
+export const ErrorPage = ({ errorCode = 404 }) => {
+  const errorAsync = useAsyncError();
+  const errorRoute = useRouteError();
+
+  const message = errorAsync?.message || errorRoute?.message;
+  const status = errorAsync?.status || errorRoute?.status;
+
   return (
     <div className="flex flex-col items-center mt-40">
       {errorIcon}
 
       <div className="text-xl font-medium text-slate-700 mb-5">
-        {ERROR_CODES[errorCode]}
+        {ERROR_CODES[status || errorCode]}
       </div>
 
       {message && <p className="text-slate-500 text-sm mb-10">{message}</p>}
