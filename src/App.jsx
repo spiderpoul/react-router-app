@@ -10,7 +10,25 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserPage } from "./pages/UserPage";
 
 function App() {
-  return <></>;
+  const isAuthorized = false;
+  return (
+    <BaseLayout>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/courses" element={<CoursesPage />} />
+      <Route
+        path="/user"
+        element={
+        <ProtectedRoute isAllowed={isAuthorized}>
+          <UserPage />
+        </ProtectedRoute>
+        }
+      />
+      <Route path="/*" element={<ErrorPage errorCode={404} />} />
+    </Routes>
+    </BaseLayout>
+  );
 }
 
 export default App;
