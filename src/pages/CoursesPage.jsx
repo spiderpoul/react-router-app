@@ -2,14 +2,20 @@ import { useEffect, useState } from "react";
 import { CourseCard } from "../components/CourseCard";
 import { mockFetch } from "../utils/api";
 import { Loader } from "../components/Loader";
-import { useSearchParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 export const CoursesPage = () => {
   const [data, setData] = useState();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchFromQuery  = searchParams.get("search");
   const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState(searchFromQuery || "");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const search = searchParams.get("search");
 
   useEffect(() => {
     setIsLoading(true);
@@ -17,15 +23,6 @@ export const CoursesPage = () => {
     mockFetch("/courses", { search })
       .then((data) => setData(data))
       .finally(() => setIsLoading(false));
-
-    setSearchParams((params) => {
-      if (search) {
-        params.set("search", search);
-      } else {
-        params.delete("search");
-      }
-      return params;
-    });
   }, [search]);
 
   if (!data) {
@@ -40,7 +37,11 @@ export const CoursesPage = () => {
           className="search-input"
           placeholder="Search courses"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearchParams({
+              search: e.target.value,
+            });
+          }}
         />
       </div>
       <div className="relative">

@@ -14,6 +14,10 @@ body {
   @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5 outline-none 
 }
 
+.form-input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 mb-2 block outline-none 
+}
+
 .course-title {
   @apply block mt-1 mb-8 text-lg leading-tight font-medium text-black hover:underline
 }
@@ -24,4 +28,16 @@ body {
 
 .course-link {
   @apply block mt-1 text-lg leading-tight font-medium text-black hover:underline
+}
+
+.tab-link {
+  @apply inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg
+}
+
+.tab-link-active {
+  @apply bg-blue-600 text-gray-100
+}
+
+.button {
+  @apply bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded
 }
