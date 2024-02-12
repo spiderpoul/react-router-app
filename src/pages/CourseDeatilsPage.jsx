@@ -23,7 +23,7 @@ export const CourseDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    mockFetch(`/courses/${id}`).then(setData);
+    mockFetch(`/courses/${id}`).then(res => setData(res));
   }, [id]);
 
   if (!data) return <Loader />;

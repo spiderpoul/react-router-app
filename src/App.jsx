@@ -12,22 +12,23 @@ import { UserPage } from "./pages/UserPage";
 function App() {
   const isAuthorized = false;
   return (
-    <BaseLayout>
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/courses" element={<CoursesPage />} />
-      <Route
-        path="/user"
-        element={
-        <ProtectedRoute isAllowed={isAuthorized}>
-          <UserPage />
-        </ProtectedRoute>
-        }
-      />
-      <Route path="/*" element={<ErrorPage errorCode={404} />} />
+        <Route path="/" element={<BaseLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:id/*" element={<CourseDetails />} />
+          <Route
+            path="/user"
+            element={
+            <ProtectedRoute isAllowed={isAuthorized}>
+              <UserPage />
+            </ProtectedRoute>
+            }
+          />
+          <Route path="/*" element={<ErrorPage errorCode={404} />} />
+        </Route>
     </Routes>
-    </BaseLayout>
   );
 }
 
