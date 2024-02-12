@@ -1,20 +1,11 @@
-import {
-  Await,
-  Route,
-  Routes,
-  defer,
-  useAsyncValue,
-  useLoaderData,
-  useParams,
-} from "react-router-dom";
-import { Suspense, useEffect, useState } from "react";
+import { Route, Routes, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Loader } from "../components/Loader";
 import { mockFetch } from "../utils/api";
 import { LinkButton } from "../components/LinkButton";
 import { Tabs } from "../components/Tabs";
 import { CourseDescription } from "../components/CourseDescription";
 import { CourseAuthor } from "../components/CourseAuthor";
-import { ErrorPage } from "./ErrorPage";
 
 const TABS = [
   {
@@ -27,14 +18,17 @@ const TABS = [
   },
 ];
 
-export const courseLoader = async ({ params }) => {
-  const course = mockFetch(`/courses/${params.id}`);
+export const CourseDetails = () => {
+  const [data, setData] = useState();
+  const { id } = useParams();
 
-  return defer({ course });
-};
+  useEffect(() => {
+    mockFetch(`/courses/${id}`).then(res => setData(res));
+  }, [id]);
 
-const CourseDetailsInner = () => {
-  const { imageUrl, title, description } = useAsyncValue();
+  if (!data) return <Loader />;
+
+  const { imageUrl, title, description } = data || {};
 
   return (
     <div className="card-container mt-10">
@@ -50,29 +44,14 @@ const CourseDetailsInner = () => {
           <div className="content-type">Course</div>
           <div className="course-title">{title}</div>
           <p className="mt-2 text-slate-500 mb-6">{description}</p>
-
           <Tabs tabs={TABS} />
-
           <Routes>
             <Route index element={<CourseDescription />} />
             <Route path="author" element={<CourseAuthor />} />
           </Routes>
-
           <LinkButton to="start-course" title="Start course" />
         </div>
       </div>
     </div>
-  );
-};
-
-export const CourseDetails = () => {
-  const { course } = useLoaderData();
-
-  return (
-    <Suspense fallback={<Loader />}>
-      <Await resolve={course} errorElement={<ErrorPage />}>
-        <CourseDetailsInner />
-      </Await>
-    </Suspense>
   );
 };

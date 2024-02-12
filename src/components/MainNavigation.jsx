@@ -3,18 +3,12 @@ import { NAV_ITEMS } from "../constants";
 
 export const MainNavigation = () => {
   return (
-    <nav className="flex">
-      {NAV_ITEMS.map((item) => (
-        <NavLink
-          key={item.path}
-          to={item.path}
-          className={({ isActive }) =>
-            isActive ? "px-3 text-amber-300" : "px-3"
-          }
-        >
-          {item.title}
-        </NavLink>
-      ))}
-    </nav>
-  );
+      <nav className="flex">
+        {NAV_ITEMS.map((item) => (
+          <NavLink to={item.path} className={({ isActive }) => `px-3 ${isActive ? "text-amber-300" : ""}`}>
+            {item.title}
+          </NavLink>
+        ))}
+      </nav>
+    );
 };

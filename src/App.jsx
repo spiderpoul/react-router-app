@@ -1,51 +1,35 @@
-import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { BaseLayout } from "./components/BaseLayout";
 import { AboutPage } from "./pages/AboutPage";
+import { CourseDetails } from "./pages/CourseDeatilsPage";
 import { CoursesPage } from "./pages/CoursesPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
 import { ROUTES } from "./constants";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserPage } from "./pages/UserPage";
-import { Loader } from "./components/Loader";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<BaseLayout />}>
-      <Route index element={<HomePage />} />
-      <Route path="/about" element={<AboutPage />} />
-      <Route path="/courses" element={<CoursesPage />} />
-      <Route
-        path="/courses/:id/*"
-        errorElement={<ErrorPage />}
-        lazy={() =>
-          import("./pages/CourseDeatilsPage").then((module) => ({
-            Component: module.CourseDetails,
-            loader: module.courseLoader,
-          }))
-        }
-      />
-      <Route
-        path="/user"
-        element={
-          <ProtectedRoute>
-            <UserPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<ErrorPage errorCode={404} />} />
-    </Route>
-  )
-);
 
 function App() {
-  return <RouterProvider router={router} fallbackElement={<Loader />} />;
+  const isAuthorized = false;
+  return (
+    <Routes>
+        <Route path="/" element={<BaseLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/courses" element={<CoursesPage />} />
+          <Route path="/courses/:id/*" element={<CourseDetails />} />
+          <Route
+            path="/user"
+            element={
+            <ProtectedRoute isAllowed={isAuthorized}>
+              <UserPage />
+            </ProtectedRoute>
+            }
+          />
+          <Route path="/*" element={<ErrorPage errorCode={404} />} />
+        </Route>
+    </Routes>
+  );
 }
 
 export default App;
