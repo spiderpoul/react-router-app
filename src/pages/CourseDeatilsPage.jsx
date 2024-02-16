@@ -44,7 +44,7 @@ export const CourseDetails = () => {
           <div className="content-type">Course</div>
           <div className="course-title">{title}</div>
           <p className="mt-2 text-slate-500 mb-6">{description}</p>
-          <Tabs tabs={TABS} />
+          <Tabs tabs={TABS}/>
           <Routes>
             <Route index element={<CourseDescription />} />
             <Route path="author" element={<CourseAuthor />} />

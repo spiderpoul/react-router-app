@@ -13,9 +13,9 @@ export const CoursesPage = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search');
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,7 +40,7 @@ export const CoursesPage = () => {
           onChange={(e) => {
             setSearchParams({
               search: e.target.value,
-            });
+            })
           }}
         />
       </div>
