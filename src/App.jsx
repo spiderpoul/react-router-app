@@ -1,35 +1,70 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import { BaseLayout } from "./components/BaseLayout";
 import { AboutPage } from "./pages/AboutPage";
-import { CourseDetails } from "./pages/CourseDeatilsPage";
-import { CoursesPage } from "./pages/CoursesPage";
+import { CourseDetails, courseLoader } from "./pages/CourseDeatilsPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { HomePage } from "./pages/HomePage";
 import { ROUTES } from "./constants";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserPage } from "./pages/UserPage";
+import { Loader } from "./components/Loader";
+import { CourseDescription } from "./components/CourseDescription";
+import { CourseAuthor } from "./components/CourseAuthor";
+import { StartCoursePage, startCourseAction } from "./pages/StartCoursePage";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<BaseLayout />} errorElement={<ErrorPage />}>
+      <Route index element={<HomePage />} />
+      <Route path="about" element={<AboutPage />} />
+
+      <Route
+        path="courses/:id"
+        element={<CourseDetails />}
+      >
+        <Route index element={<CourseDescription />} />
+        <Route path="author" element={<CourseAuthor />} />
+      </Route>
+
+      <Route
+        path="courses/:id/start-course"
+        element={<StartCoursePage />}
+        action={startCourseAction}
+      />
+
+      <Route
+        path="courses"
+        fallbackElement={<Loader />}
+        lazy={() =>
+          import("./pages/CoursesPage").then((module) => ({
+            Component: module.CoursesPage,
+            loader: module.coursesLoader,
+          }))
+        }
+      />
+
+      <Route
+        path={ROUTES.user}
+        element={
+          <ProtectedRoute isAllowed={false}>
+            <UserPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<ErrorPage />} />
+    </Route>
+  )
+);
 
 function App() {
-  const isAuthorized = false;
-  return (
-    <Routes>
-        <Route path="/" element={<BaseLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/courses" element={<CoursesPage />} />
-          <Route path="/courses/:id/*" element={<CourseDetails />} />
-          <Route
-            path="/user"
-            element={
-            <ProtectedRoute isAllowed={isAuthorized}>
-              <UserPage />
-            </ProtectedRoute>
-            }
-          />
-          <Route path="/*" element={<ErrorPage errorCode={404} />} />
-        </Route>
-    </Routes>
-  );
+  return <RouterProvider router={router} fallbackElement={<Loader />} />;
 }
 
 export default App;
